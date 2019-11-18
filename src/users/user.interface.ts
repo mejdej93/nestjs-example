@@ -3,16 +3,8 @@ import { Document } from 'mongoose';
 
 export interface User extends Document {
     _id: mongoose.Types.ObjectId;
-    firstName: {
-        type: string,
-        required: true
-    };
-    lastName: {
-        type: string,
-        required: true
-    };
-    email: {
-        type: string,
-        required: true
-    };
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
 }

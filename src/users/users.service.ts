@@ -11,12 +11,16 @@ export class UsersService {
     ) {
     }
 
-    async getAllUsers() :Promise<User[]> {
+    async getAllUsers(): Promise<User[]> {
         return await this.userModel.find();
     }
 
-    async getUserById(id: number): Promise<User> {
+    async findUserById(id: number): Promise<User> {
         return await this.userModel.findById({_id: id});
+    }
+
+    async findUserByEmail(email: string): Promise<User | undefined> {
+        return this.userModel.findOne({email});
     }
 
     async createUser(userDto: UserDto): Promise<User> {
