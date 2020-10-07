@@ -1,14 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { User } from './user.interface';
+import { Injectable } from '@nestjs/common';
+import {FilterQuery, Model} from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import {UserDocument, User} from './user.schema';
 import { UserDto } from './userDto.interface';
-import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-    constructor(
-        @Inject('USER_MODEL')
-        private readonly userModel: Model<User>,
-    ) {
+    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {
     }
 
     async getAllUsers(): Promise<User[]> {
@@ -20,7 +18,7 @@ export class UsersService {
     }
 
     async findUserByEmail(email: string): Promise<User | undefined> {
-        return this.userModel.findOne({email});
+        return this.userModel.findOne({email} as FilterQuery<User>);
     }
 
     async createUser(userDto: UserDto): Promise<User> {
